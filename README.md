@@ -32,4 +32,6 @@ B. SERVER
 ? What format do you want your config file to be in? JavaScript
 
 6.Install depedencies                   : yarn add express body-parser cors morgan or
-                                          npm install -g @vue/cli
+                                          npm install express body-parser cors morgan
+
+
