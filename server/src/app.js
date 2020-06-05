@@ -2,31 +2,21 @@ const express = require('express')
 const bodyParser =  require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
+const {sequelize} = require('./models')
+const config = require('./config/config')
 
 const app = express()
 app.use(morgan('combine'))
 app.use(bodyParser.json())
 app.use(cors());
 
-app.get('/', (req,res) => {
-    res.send({
-        message : "Start ibs-online"
-    })
-})
+var env = process.env.NODE_ENV || 'development';
+const PORT = process.env.Port || config.server[env].port
 
-app.post('/register', (req,res) => {
-    res.send({
-        message : `Hello ${req.body.email}, Your User was registered! Have fun!`,
-        status : "OK"
-    })
-})
+require ('./routes')(app)
 
-app.get('/status', (req,res) => {
-    res.send({
-        message : "hello ibs-online",
-        status : "OK"
-    })
+// sequelize.sync({force:true})
+sequelize.sync()
+.then(()=>{
+    app.listen(PORT, console.log(`Server started on port ${PORT}`))
 })
-
-const PORT = process.env.Port || 8081
-app.listen(PORT, console.log(`Server started on port ${PORT}`))

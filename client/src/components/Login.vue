@@ -16,7 +16,7 @@
           <v-divider></v-divider>
           <v-card-text>
             <p>Sign in with your username and password:</p>
-            <v-form>
+            <v-form name="erp-login-form">
               <v-text-field
                 label="Email"
                 prepend-icon="far fa-user"
@@ -33,6 +33,7 @@
                 counter
                 @click:append="passshow = !passshow"
                 v-model="password"
+                autocomplete="new-password"
               ></v-text-field>
             </v-form>
           </v-card-text>
@@ -45,9 +46,9 @@
             </v-btn>
             <v-spacer></v-spacer>
             <v-btn
-              @click="register"
+              @click="login"
               class="teal lighten-1" dark center>
-              Register
+              Login
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -86,11 +87,11 @@ export default {
     }
   },
   methods: {
-    async register () {
+    async login () {
       this.error = null
       try {
         // const response =
-        await AuthService.register({
+        await AuthService.login({
           email: this.email,
           password: this.password
         })
